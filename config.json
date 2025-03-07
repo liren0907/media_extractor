@@ -1,0 +1,43 @@
+{
+  "input_directory": "data/test",
+  "output_directory": "output_categorized",
+  "hash_size": 16,
+  "similarity_threshold": 0.9,
+  "consider_rotations": true,
+  "consider_flips": true,
+  "robust_comparison": true,
+  "use_color_hash": true,
+  "matching_method": "ssim",
+  "blur_radius": 6.0,
+  "bit_error_tolerance": 0.45,
+  "sift_match_threshold": 0.35,
+  "sift_feature_count": 800,
+  "create_category_thumbnails": true,
+  "max_images_per_category": 1000,
+  "naming_pattern": "category_{index}",
+  "log_level": "info",
+  "filter_horizontal_only": true,
+  "benchmark_mode": false,
+  "run_mode": "natural_high_resolution_split",
+  "mode_options": {
+    "benchmark": {
+      "enabled": true
+    },
+    "confusion_matrix": {
+      "source_directory": "data/test"
+    },
+    "natural_high_resolution": {
+      "source_directory": "data/test"
+    },
+    "natural_high_resolution_split": {
+      "source_directory": "data/test",
+      "split_similarity_threshold": 0.85,
+      "use_multi_threading": true,
+      "thread_count": 4
+    },
+    "compare": {
+      "image1": "data/test/segment_20250221_125843_1.jpg",
+      "image2": "data/test/segment_20250221_125843_2.jpg"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+# Cargo
+/target/
+**/*.rs.bk
+
+# Build artifacts
+*.rlib
+*.dSYM/
+*.pdb
+*.exe
+*.dll
+*.so
+*.dylib
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Logs
+*.log
+
+# IDEs
+.idea/
+.vscode/
+
+# Data and assets related
+target
+stored
+script
+scripts
+output
+outputs
+output_*
+result
+results
+result_*
+data
+data_*
+motion_clips
+motion_clips_*
+

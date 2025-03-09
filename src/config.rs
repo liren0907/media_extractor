@@ -152,14 +152,22 @@ impl Default for ModeOptions {
 /// Options for benchmark mode
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct BenchmarkOptions {
-    #[serde(default)]
-    pub enabled: bool,
+    #[serde(default = "default_benchmark_methods")]
+    pub methods: Vec<MatchingMethod>,
+}
+
+fn default_benchmark_methods() -> Vec<MatchingMethod> {
+    vec![
+        MatchingMethod::PerceptualHash,
+        MatchingMethod::ColorHash,
+        MatchingMethod::Ssim,
+    ]
 }
 
 impl Default for BenchmarkOptions {
     fn default() -> Self {
         BenchmarkOptions {
-            enabled: false,
+            methods: default_benchmark_methods(),
         }
     }
 }
@@ -204,6 +212,7 @@ pub struct Config {
     pub naming_pattern: String,
     
     // General settings
+    #[serde(default = "default_log_level")]
     pub log_level: String,
     
     // Image filter settings
@@ -273,6 +282,10 @@ fn default_split_similarity_threshold() -> f64 {
 fn default_thread_count() -> usize {
     // Default to the number of logical cores, but at least 2
     std::thread::available_parallelism().map(|p| p.get()).unwrap_or(2)
+}
+
+fn default_log_level() -> String {
+    "trace".to_string()
 }
 
 impl Config {
@@ -422,7 +435,7 @@ impl Config {
             naming_pattern: "category_{index}".to_string(),
             
             // General settings
-            log_level: "info".to_string(),
+            log_level: "trace".to_string(),
             
             // Image filter settings
             filter_horizontal_only: false,
@@ -447,6 +460,12 @@ pub fn load_config() -> Result<Config, Box<dyn std::error::Error>> {
         println!("Created default configuration file: {}", config_path);
     }
     
-    let config = Config::from_file(config_path)?;
+    let mut config = Config::from_file(config_path)?;
+
+    // Validate and apply post-load logic
+    if config.log_level.is_empty() {
+        config.log_level = default_log_level();
+    }
+
     Ok(config)
 }

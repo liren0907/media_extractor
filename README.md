@@ -1,6 +1,37 @@
-# Media-Lake
+# Media-Extractor
 
-A Rust application for advanced image processing and categorization based on visual similarity.
+A Rust application for extracting valuable and high-quality images from large collections of snapshots or similar images. Media-Extractor helps you identify the best representations while eliminating redundancy in your media library.
+
+> **Note:** While designed with video frame extraction in mind, direct video file processing is not yet implemented in the current version.
+
+## Quick Start
+
+Get up and running with Media-Extractor in minutes:
+
+```bash
+# 1. Clone and build the project
+git clone <repository-url>
+cd media-extractor
+cargo build --release
+
+# 2. Create a test directory with some sample images
+mkdir -p data/test
+# Copy some test images to data/test
+
+# 3. Run the application with default settings
+cargo run --release
+
+# 4. Check the results in the output directory
+ls output_categorized
+```
+
+For first-time users, the natural high resolution split mode is recommended:
+
+```bash
+# Edit config.json to set run_mode to "natural_high_resolution_split"
+# Then run:
+cargo run --release
+```
 
 ## Features
 
@@ -19,11 +50,11 @@ A Rust application for advanced image processing and categorization based on vis
 
 ## Installation
 
-Ensure you have Rust and Cargo installed on your system. Then clone this repository and build the project:
+Ensure you have Rust and Cargo installed on your system. Then clone this repository (if you haven't already) and build the project:
 
 ```bash
 git clone <repository-url>
-cd media-lake
+cd media-extractor
 cargo build --release
 ```
 
@@ -41,7 +72,7 @@ This will run the mode specified by the `run_mode` field in your configuration f
 
 ### Available Run Modes
 
-Media-Lake supports multiple processing modes:
+Media-Extractor supports multiple processing modes:
 
 1. **categorize**: Group similar images together based on visual similarity
 2. **benchmark**: Test performance of different matching methods
@@ -70,7 +101,7 @@ cargo run compare <img1> <img2>
 
 ### Configuration Management
 
-Media-Lake uses a configuration file (`config.json`) to control its behavior:
+Media-Extractor uses a configuration file (`config.json`) to control its behavior:
 
 ```bash
 # Create default configuration file
@@ -84,7 +115,7 @@ cargo run config show
 
 ### Enhanced Similarity Algorithm
 
-Media-Lake uses a sophisticated multi-technique approach to image matching:
+Media-Extractor uses a sophisticated multi-technique approach to image matching:
 
 1. **Perceptual Hash Comparison** (40% weight): Creates a "fingerprint" for each image by:
    - Resizing the image to a configurable hash size (default: 16x16)
@@ -137,7 +168,7 @@ The categorization algorithm:
 
 ## Configuration Options
 
-The `config.json` file is central to Media-Lake's functionality, allowing you to fine-tune every aspect of the image processing and categorization process. Here's a comprehensive breakdown of all available options:
+The `config.json` file is central to Media-Extractor's functionality, allowing you to fine-tune every aspect of the image processing and categorization process. Here's a comprehensive breakdown of all available options:
 
 ```json
 {
@@ -197,7 +228,7 @@ All other parameters will use their default values if omitted from the config fi
 #### Directory Settings
 - **input_directory**: Path to the source directory containing images to process. Can be relative or absolute.
   - Default: `"data/frames"`
-  - Impact: Determines where Media-Lake looks for images to categorize.
+  - Impact: Determines where Media-Extractor looks for images to categorize.
 
 - **output_directory**: Path where categorized images and generated data will be stored.
   - Default: `"data/categorized"`

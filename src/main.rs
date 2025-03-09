@@ -1,10 +1,10 @@
-use media_lake::config::{Config, load_config, RunMode};
-use media_lake::categorize;
-use media_lake::image_processing;
-use media_lake::benchmark;
-use media_lake::confusion_matrix;
-use media_lake::natural_categorization;
-use media_lake::natural_categorization_split;
+use media_extractor::config::{Config, load_config, RunMode};
+use media_extractor::categorize;
+use media_extractor::image_processing;
+use media_extractor::benchmark;
+use media_extractor::confusion_matrix;
+use media_extractor::natural_categorization;
+use media_extractor::natural_categorization_split;
 use std::path::Path;
 use std::env;
 
@@ -46,9 +46,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             if args.len() > 3 {
                 config.output_directory = args[3].clone();
             }
-            
-            // Force benchmark mode on
-            config.benchmark_mode = true;
             
             // Run benchmark
             benchmark::run_benchmark(&config)?;
@@ -169,14 +166,8 @@ fn run_from_config() -> Result<(), Box<dyn std::error::Error>> {
             run_default_categorization()
         },
         RunMode::Benchmark => {
-            // Use either the deprecated benchmark_mode or the new structure
-            let enabled = config.benchmark_mode || config.mode_options.benchmark.enabled;
-            if enabled {
-                benchmark::run_benchmark(&config)
-            } else {
-                println!("Benchmark mode is specified but not enabled in config. Running default categorization.");
-                run_default_categorization()
-            }
+            // Benchmark mode is directly enabled by RunMode::Benchmark
+            benchmark::run_benchmark(&config)
         },
         RunMode::ConfusionMatrix => {
             let source_dir = &config.mode_options.confusion_matrix.source_directory;

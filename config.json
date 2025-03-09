@@ -15,13 +15,17 @@
   "create_category_thumbnails": true,
   "max_images_per_category": 1000,
   "naming_pattern": "category_{index}",
-  "log_level": "info",
   "filter_horizontal_only": true,
-  "benchmark_mode": false,
   "run_mode": "natural_high_resolution_split",
   "mode_options": {
     "benchmark": {
-      "enabled": true
+      "methods": [
+        "perceptualhash",
+        "colorhash",
+        "sift",
+        "surf",
+        "ssim"
+      ]
     },
     "confusion_matrix": {
       "source_directory": "data/test"
